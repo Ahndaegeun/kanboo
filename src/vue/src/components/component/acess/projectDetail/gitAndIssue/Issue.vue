@@ -71,7 +71,7 @@ export default {
     overflow: scroll;
 }
 .Issues::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera*/
+    display: none;
 }
 .getIssue{
     background-color: #2C2F3B;
