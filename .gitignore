@@ -1,0 +1,6 @@
+src/vue/node_modules
+src/vue/package-lock.json
+.idea
+HELP.md
+build
+.gradle
