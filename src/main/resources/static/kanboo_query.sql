@@ -340,12 +340,3 @@ create table board_gantt (
     foreign key (board_idx, prjct_idx) references project_board
 );
 
-
-
-SELECT *
-  FROM BOARD B, ANSWER A
- WHERE B.board_idx = A.board_idx
-   AND B.mem_idx LIKE '%'||''||'%'
-   AND 1=1
-ORDER BY DESC
- LIMIT ???, 5;
