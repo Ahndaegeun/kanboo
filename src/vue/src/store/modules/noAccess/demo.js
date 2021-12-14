@@ -8,7 +8,8 @@ const demo = {
   System.out.println("hello java");
       }
   }`,
-    resultCode: ""
+    resultCode: "",
+    codeColor: "#ffffff"
   },
   mutations: {
     setCodeText(state, code) {
@@ -16,6 +17,9 @@ const demo = {
     },
     setResultCode(state, code) {
       state.resultCode = code
+    },
+    setCodeColor(state, color) {
+      state.codeColor = color
     }
   },
   actions: {
@@ -25,8 +29,12 @@ const demo = {
 
       axios.post("/noAccess/demoCompile", params)
         .then(res => {
-          console.log(res.data)
-          context.commit("setResultCode", res.data)
+          if(res.data.isSuccess === "false") {
+            context.commit("setCodeColor", "#ff0000")
+          } else {
+            context.commit("setCodeColor", "#ffffff")
+          }
+          context.commit("setResultCode", res.data.detail)
         })
     }
   }

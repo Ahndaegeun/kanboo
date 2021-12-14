@@ -1,9 +1,23 @@
 <template>
   <div class="table-container">
     <Write class="add-table"/>
+    <div class="zoom-btn">
+      <button type="button" @click="zoomIn" class="in">
+        <i class="fa fa-search-plus" style="color: #fff;"></i>
+      </button>
+      <button type="button" @click="zoomOut" class="out">
+        <i class="fa fa-search-minus" style="color: #fff;"></i>
+      </button>
+    </div>
     <ul class="table-list">
       <li class="table-box"
-          v-for="(item, index) in $store.state.erd.sideBarData.topData" :key="index">
+          v-for="(item, index) in $store.state.erd.sideBarData.topData" 
+          :key="index"
+          @click="clickErd(item)"
+          :style="{
+            border: item.borderColor, 
+            transform: `scale(${$store.state.erd.scale})`
+            }">
         <div class="title">
           <input type="text" :readonly="!item.isModify" v-model="item.name"> 
           <div>
@@ -66,7 +80,10 @@ export default {
       deleteTable: 'erd/deleteTable',
       showModify: 'erd/showModify',
       cancel: 'erd/cancel',
-      modifyTable: 'erd/modifyTable'
+      modifyTable: 'erd/modifyTable',
+      clickErd: 'erd/clickErd',
+      zoomIn: 'erd/zoomIn',
+      zoomOut: 'erd/zoomOut'
     }),
     ...mapActions({
       getErdData: 'erd/getErdData'
@@ -83,7 +100,6 @@ export default {
   border: 1px solid #999;
   width: 85%;
   position: relative;
-  padding: 30px;
 }
 
 .add-table {
@@ -94,6 +110,12 @@ export default {
 
 .table-list {
   height: 100%;
+  padding: 30px;
+  overflow: scroll;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: auto;
+  grid-gap: 10px;
 }
 
 .table-box {
@@ -102,6 +124,7 @@ export default {
   background: #2C2F3B;
   color: #fff;
   margin-bottom: 10px;
+  height: fit-content;
 }
 
 .table-box .title {
@@ -136,5 +159,9 @@ export default {
 
 .table-box .body span {
   min-width: 100px;
+}
+
+.zoom-btn {
+  position: absolute;
 }
 </style>

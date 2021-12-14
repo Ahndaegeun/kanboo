@@ -1,17 +1,4 @@
 <template>
-    <button
-      style="
-        position: absolute;
-        top: 50%;
-        right: 50%;
-        background: #eee;
-        width: 100px;
-        height: 100px;
-      "
-      @click="noticeTest"
-    >
-      알람 테스트
-    </button>
   <div class="notice-container">
     <div
       :id="`notice-${index}`"
@@ -65,7 +52,7 @@ export default {
 .notice-container {
   position: absolute;
   right: 0;
-  top:0;
+  top:70px;
   display: flex;
   flex-direction: column;
   z-index: 10;

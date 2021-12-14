@@ -3,6 +3,7 @@ import erdData from '../../../assets/erdData.json'
 const erd = {
   namespaced: true,
   state: {
+    scale: 1,
     lastIdx: 3,
     erdData: erdData,
     relation: {
@@ -262,6 +263,39 @@ const erd = {
     },
     closeExportQuery(state) { 
       state.isShowQuery = false
+    },
+    clickErd(state, item) {
+      state.sideBarData.topData.forEach(item => {
+        item.borderColor = ""
+      })
+      if(item.isClick) {
+        item.isClick = false
+        return
+      }
+
+      item.borderColor = "1px solid red"
+      item.isClick = true
+      item.columns.forEach(item => {
+        if(item.references !== "") {
+          state.sideBarData.topData.forEach(parent => {
+            if(parent.name === item.references) {
+              parent.borderColor = "1px solid blue"
+            }
+          })
+        }
+      })
+    },
+    zoomIn(state) {
+      if(state.scale >= 1) {
+        return
+      }
+      state.scale += .1
+    },
+    zoomOut(state) {
+      if(state.scale < .6) {
+        return
+      }
+      state.scale -= .1
     }
   },
   actions: {

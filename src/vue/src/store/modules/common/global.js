@@ -2,6 +2,7 @@ const global = {
   namespaced: true,
   state: {
     isLogin: false,
+    chatOn: true
   },
   mutations: {
     setIsLogin(state, value) {

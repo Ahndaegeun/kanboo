@@ -102,9 +102,11 @@ export default {
 
 .run-btn {
   position: absolute;
-  top: 15px;
+  top: 0;
   right: 10px;
   z-index: 10;
+  font-size: 20px;
+  color: #fff;
 }
 
 .run-btn:hover {

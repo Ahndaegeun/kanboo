@@ -7,5 +7,5 @@ import java.util.Map;
 
 public interface CompilerService {
 
-    String runDemo(String code);
+    Map<String, String> runDemo(String code);
 }

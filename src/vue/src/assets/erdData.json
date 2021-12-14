@@ -25,7 +25,9 @@
         "references": null
       }
     ],
-    "isModify": false
+    "isModify": false,
+    "borderColor": "",
+    "isClick": false
   },
   {
     "idx": 2,
@@ -67,7 +69,9 @@
         "references": "Member"
       }
     ],
-    "isModify": false
+    "isModify": false,
+    "borderColor": "",
+    "isClick": false
   },
   {
     "idx": 3,
@@ -109,6 +113,8 @@
         "references": "Member"
       }
     ],
-    "isModify": false
+    "isModify": false,
+    "borderColor": "",
+    "isClick": false
   }
 ]

@@ -24,6 +24,8 @@ import Demand from './components/container/access/projectDetail/Demand.vue'
 import Gantt from './components/container/access/projectDetail/GanttChart.vue'
 import GitAndIssue from './components/container/access/projectDetail/GitAndIssue.vue'
 
+import Kanban from './components/container/access/projectDetail/Kanban.vue'
+
 import ErdAndView from './components/container/access/projectDetail/ErdAndView.vue'
 import Table from './components/component/acess/projectDetail/erdAndView/erd/Table.vue'
 
@@ -103,6 +105,13 @@ const routes = [
       {
         path: "gitissue",
         component: GitAndIssue
+      },
+      {
+        path: "kanban",
+        component: Kanban,
+        children: [
+          
+        ]
       },
       {
         path: "erdview",

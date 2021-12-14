@@ -1,37 +1,19 @@
 <template>
-  <button
-    style="
-      position: absolute;
-      top: 30%;
-      right: 50%;
-      background: #eee;
-      width: 100px;
-      height: 100px;
-    "
-    @click="chatTest"
-  >
-    채팅 테스트
-  </button>
   <div class="chat-container">
-    <div
-      class="chat-box"
-      v-for="(chat, index) in chatData"
-      :key="index"
-      :id="`chatRoom-${index}`"
-    >
+    <div class="chat-box" id="chatRoom">
       <div class="chat-header">
         <i
-          v-if="chat.isMini == false"
-          @click="setMini(index)"
+          v-if="!chatData.isMini"
+          @click="setMini()"
           class="fas fa-minus"
         ></i>
-        <i v-else @click="setMax(index)" class="far fa-square"></i>
+        <i v-else @click="setMax()" class="far fa-square"></i>
       </div>
       <div class="chat-content">
         <ul>
           <li
             class="chat-line"
-            v-for="(line, index) in chat.content"
+            v-for="(line, index) in chatData.content"
             :key="index"
             :class="{ 'chat-myLine': line.id == userId }"
           >
@@ -64,12 +46,12 @@
       </div>
       <div class="chat-inputBox">
         <input
-          :id="`chat-input-${index}`"
+          :id="`chat-input`"
           @input="setText"
-          @keyup.enter="sendMessage(index)"
+          @keyup.enter="sendMessage()"
           type="text"
         />
-        <button @click="sendMessage(index)">전송</button>
+        <button @click="sendMessage()">전송</button>
       </div>
     </div>
   </div>
@@ -82,7 +64,7 @@ const today = moment();
 
 export default {
   updated() {
-    this.focus(this.lastChatRoom);
+    this.focus();
   },
   data() {
     return {
@@ -90,7 +72,6 @@ export default {
       inputText: "",
       userId: "zerochae",
       img: "con3.jpg",
-      lastChatRoom: "",
     };
   },
   methods: {
@@ -99,51 +80,40 @@ export default {
     },
     // 여기다가 메시지 받기 기능 추가 해야함!!!!!!!!!!!!!!!!!!!!
     getMessage() {},
-    sendMessage(index) {
+    sendMessage() {
       let date = today.format("HH:MM");
 
       if (this.inputText !== "") {
-        this.chatData[index].content.push({
+        this.chatData.content.push({
           id: this.userId,
           text: this.inputText,
           date: date,
         });
       }
-      document.querySelector(`#chat-input-${index}`).value = "";
+      document.querySelector(`#chat-input`).value = "";
       this.inputText = "";
-      this.lastChatRoom = index;
     },
-    focus(index) {
-      let chatRoom = document.querySelector("#chatRoom-0>.chat-content>ul");
+    focus() {
+      let chatRoom = document.querySelector("#chatRoom>.chat-content>ul");
       chatRoom.lastElementChild.scrollIntoView();
     },
-    setMini(index) {
-      let chatRoom = document.querySelector(`#chatRoom-${index}`);
+    setMini() {
+      let chatRoom = document.querySelector(`#chatRoom`);
       chatRoom.className = "chat-box chat-mini";
-      this.chatData[index].isMini = true;
+      this.chatData.isMini = !this.chatData.isMini;
     },
-    setMax(index) {
-      let chatRoom = document.querySelector(`#chatRoom-${index}`);
+    setMax() {
+      let chatRoom = document.querySelector(`#chatRoom`);
       chatRoom.className = "chat-box";
-      this.chatData[index].isMini = false;
-    },
-    // 채팅 메시지 받기 테스트
-    chatTest() {
-      let date = today.format("HH:MM");
-      this.chatData[0].content.push({
-        id: "kade",
-        text: "머하냐~",
-        img: "con1.jpg",
-        date: date,
-      });
+      this.chatData.isMini = !this.chatData.isMini;
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
 .chat-container {
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 0;
   display: flex;
@@ -176,6 +146,7 @@ export default {
 .chat-header i {
   font-size: 18px;
   margin-right: 8px;
+  color : white;
 }
 
 .chat-content {
@@ -190,6 +161,7 @@ export default {
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
+  color: white;
 }
 
 .chat-line {
@@ -309,6 +281,22 @@ export default {
 
 ::-webkit-scrollbar {
   width: 0px;
+  /* border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial; */
+}
+
+::-webkit-scrollbar-thumb {
+  /* border-radius: 30px;
+  background-color: rgb(141, 133, 133);
+  box-shadow: 0px 3px 12px rgba(255, 255, 255, 0.227);
+  width: 0px;
+  height: 8px;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial; */
 }
 
 .chat-mini {

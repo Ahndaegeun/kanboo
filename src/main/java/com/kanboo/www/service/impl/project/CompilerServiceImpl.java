@@ -19,7 +19,7 @@ public class CompilerServiceImpl implements CompilerService {
     private static final String rootPath = "./compileFiles/";
 
     @Override
-    public String runDemo(String code) {
+    public Map<String, String> runDemo(String code) {
         Map<String, String> map = new HashMap<>();
         map.put("filePath", "/src/");
         map.put("fileName", "Main");
@@ -42,7 +42,8 @@ public class CompilerServiceImpl implements CompilerService {
 
         Map<String, String> compileCmd = compilerUtil.terminalCompile(cmdList.get("compileCmd"));
         if(compileCmd.get("isSuccess").equals("false")) {
-            return compileCmd.get("detail").substring(32, compileCmd.get("detail").length());
+            compileCmd.put("detail", compileCmd.get("detail").substring(32, compileCmd.get("detail").length()));
+            return compileCmd;
         }
 
         compilerUtil.terminalCompile(cmdList.get("createManifestCmd"));
@@ -51,8 +52,6 @@ public class CompilerServiceImpl implements CompilerService {
 
         compilerUtil.terminalCompile(cmdList.get("setManifestCmd"));
 
-        Map<String, String> runJarCmd = compilerUtil.terminalCompile(cmdList.get("runJarCmd"));
-
-        return runJarCmd.get("detail");
+        return compilerUtil.terminalCompile(cmdList.get("runJarCmd"));
     }
 }

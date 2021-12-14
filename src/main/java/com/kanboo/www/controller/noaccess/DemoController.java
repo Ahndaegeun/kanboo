@@ -22,7 +22,7 @@ public class DemoController {
     private final CompilerService compilerService;
 
     @PostMapping("/demoCompile")
-    public String demoCompile(@RequestParam String code) {
+    public Map<String, String> demoCompile(@RequestParam String code) {
         return compilerService.runDemo(code);
     }
 

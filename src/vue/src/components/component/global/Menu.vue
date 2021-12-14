@@ -15,6 +15,16 @@
           <router-link v-if="item.path === nowTab" 
                       class="route-menu check" 
                       :to="item.path">{{item.name}}</router-link>
+          <button type="button" v-else-if="item.name === 'notification'"
+                  class="alarm-icon"
+                  @click="notificationClick">
+                  <i class="fa fa-bell-o"></i>
+          </button>
+          <button type="button" v-else-if="item.name === 'userSetting'"
+                  class="user-icon"
+                  @click="userSettingClick">
+                  <i class="fa fa-user-o"></i>
+          </button>
           <router-link v-else-if="item.path !== nowTab" 
                       class="route-menu" 
                       :to="item.path">{{item.name}}</router-link>
@@ -26,6 +36,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import MenuContent from '../../../assets/MenuList.json'
 export default {
   name: 'menu',
@@ -38,6 +49,12 @@ export default {
       },
       nowTab: ""
     }
+  },
+  methods: {
+    ...mapMutations({
+      notificationClick: 'menu/notificationClick',
+      userSettingClick: 'menu/userSettingClick'
+    })
   },
   watch: {
     '$route' (to) {
@@ -119,6 +136,15 @@ button {
 }
 
 .check {
+  color: #fff;
+}
+
+.fa {
+  color: #999;
+  transition: color .2s ease-in;
+}
+
+.fa:hover {
   color: #fff;
 }
 </style>

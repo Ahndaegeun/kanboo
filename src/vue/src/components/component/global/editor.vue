@@ -2,17 +2,17 @@
   <div class="main-content">
     <div class="text-editor-header">
       <button v-for="item in btnList" :key="item"
-              type="button" 
+              type="button"
               class="btn" 
               :data-element="item.ele"
-              @click="btnClick(item.ele); getText()">
-                <i :class="item.icon"></i>
+              @click="btnClick(item); getText()">
+                <i :class="item.icon" style="color: #fff;"></i>
               </button>
       <div class="file-box">
         <label for="upload-file">
           <i class="fa fa-file-image-o"></i>
         </label>
-        <input id="upload-file" type="file" @change="uploadFile">
+        <input id="upload-file" type="file" @change="insertImg">
       </div>
       
       <input id="color" type="color" v-model="color">
@@ -54,14 +54,6 @@ export default {
           icon: 'fa fa-underline'
         },
         {
-          ele: 'insertUnorderedList',
-          icon: 'fa fa-list-ul'
-        },
-        {
-          ele: 'insertOrderedList',
-          icon: 'fa fa-list-ol'
-        },
-        {
           ele: 'createLink',
           icon: 'fa fa-link'
         },
@@ -86,17 +78,18 @@ export default {
   },
 
   methods: {
-    btnClick(command) {
-      if(command === 'createLink') {
+    btnClick(item) {
+      if(item.ele === 'createLink') {
         const url = prompt('Enter thr link here: ', 'http://')
-        document.execCommand(command, false, url);
-      } else if(command === 'insertImage') {
+        document.execCommand(item.ele, false, url);
+      } else if(item.ele === 'insertImage') {
+        console.log(item.ele)
         const img = `<img style="width: 300px; height: 300px;" src="data:image/*;base64,${this.image}" alt="img"/>`
         document.execCommand('insertHTML', false, img)
-      }else if(command === 'foreColor') {
+      }else if(item.ele === 'foreColor') {
         document.execCommand('ForeColor', false, this.color)
       } else {
-        document.execCommand(command, false, null)
+        document.execCommand(item.ele, false, null)
       }
     },
 
@@ -134,12 +127,17 @@ export default {
     //   }
     //   this.$emit('exportContent', returnData)
     // 
+    insertImg() {
+      const obj = {
+        ele: "insertImage"
+      }
+      this.btnClick(obj)
+    }
   },
   watch: {
     color() {
       this.btnClick('foreColor')
     },
-
     isExport() {
       this.exportC = document.querySelector('#content').innerHTML
       const returnData = {
@@ -154,7 +152,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 * {
   margin: 0;
   padding: 0;
@@ -172,8 +170,8 @@ body {
   height: 100%;
 }
 .text-editor-header {
-  background: black;
-  
+  background: #252529;
+  border: 1px solid #ecf0f1;
   padding: 5px;
   display: flex;
   align-items: center;
