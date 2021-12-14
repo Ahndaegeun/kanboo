@@ -3,3 +3,4 @@ src/vue/package-lock.json
 .idea
 HELP.md
 build
+.gradle
